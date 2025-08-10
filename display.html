@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Zone</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fff;
+            padding: 20px;
+            width: 320px;
+            color: #222;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #181818;
+                color: #eee;
+            }
+            .container {
+                background: #232323;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            }
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            transition: background 0.3s;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            color: #000000;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .header p {
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #FFFDE7;
+            color: #FFD600;
+            border: 1px solid #FFD600;
+        }
+
+        .status-badge.active {
+            background: #FFFDE7;
+            color: #FFD600;
+            border: 1px solid #FFD600;
+        }
+
+        .status-badge.inactive {
+            background: #f7fafc;
+            color: #bdbdbd;
+            border: 1px solid #e0e0e0;
+        }
+
+        .options-section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 15px;
+            padding-left: 5px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .checkbox-item:hover {
+            background-color: #FFFDE7;
+            border-color: #FFD600;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            accent-color: #FFD600;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #222;
+            cursor: pointer;
+            flex-grow: 1;
+            user-select: none;
+        }
+
+        .checkbox-item .icon {
+            margin-left: auto;
+            font-size: 16px;
+            opacity: 0.6;
+        }
+
+        .toggle-button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toggle-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .toggle-button:hover::before {
+            left: 100%;
+        }
+
+        .toggle-button.enable {
+            background: linear-gradient(135deg, #FFD600 60%, #FFFDE7 100%);
+            color: #222;
+            box-shadow: 0 4px 15px rgba(255, 214, 0, 0.15);
+            border: 2px solid #FFD600;
+        }
+
+        .toggle-button.enable:hover {
+            background: linear-gradient(135deg, #FFFDE7 0%, #FFD600 100%);
+            color: #181818;
+        }
+
+        .toggle-button.disable {
+            background: linear-gradient(135deg, #bdbdbd, #e0e0e0);
+            color: #222;
+            border: 2px solid #FFD600;
+        }
+
+        .toggle-button.disable:hover {
+            background: linear-gradient(135deg, #FFD600, #bdbdbd);
+            color: #181818;
+        }
+
+        .toggle-button:active {
+            transform: translateY(0);
+        }
+
+        .toggle-button:disabled {
+            background: #e0e0e0;
+            color: #bdbdbd;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .button-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .button-icon {
+            font-size: 18px;
+        }
+
+        .warning {
+            background: #FFFDE7;
+            border: 1px solid #FFD600;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .warning-text {
+            font-size: 12px;
+            color: #000000;
+            font-weight: 500;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Focus Zone</h1>
+            <p>Minimize distractions, maximize focus</p>
+            <span id="statusBadge" class="status-badge inactive">Inactive</span>
+        </div>
+
+        <div class="options-section">
+            <div class="section-title">Choose what to hide:</div>
+            <div class="checkbox-group">
+                <div class="checkbox-item" data-checkbox="hideComments">
+                    <input type="checkbox" id="hideComments" checked>
+                    <label for="hideComments">Hide Comments</label>
+                </div>
+                <div class="checkbox-item" data-checkbox="hideSidebar">
+                    <input type="checkbox" id="hideSidebar" checked>
+                    <label for="hideSidebar">Hide Suggested Videos</label>
+                </div>
+            </div>
+        </div>
+
+        <button id="toggleBtn" class="toggle-button enable">
+            <div class="button-content">
+                
+                <span id="buttonText">Enable Focus Mode</span>
+            </div>
+        </button>
+
+        <div class="warning">
+            <div class="warning-text">
+                Changes apply immediately on YouTube watch pages
+            </div>
+        </div>
+    </div>
+    <script src="display.js"></script>
+</body>
+</html>

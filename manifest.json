@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Youtube Focus Mode",
+  "version": "1.0",
+  "description": "Hide distractions on YouTube and focus on what matters with visual feedback.",
+  "permissions": ["scripting", "storage", "tabs", "activeTab"],
+  "host_permissions": ["*://www.youtube.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["*://www.youtube.com/watch*"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "display.html",
+    "default_icon": "icon.png",
+    "default_title": "Toggle YouTube Focus Mode"
+  },
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  }
+}

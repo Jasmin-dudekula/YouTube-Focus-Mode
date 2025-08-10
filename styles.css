@@ -1,0 +1,121 @@
+/* Focus Mode Notification Styles */
+.yt-focus-notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99999;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+    opacity: 0;
+    scale: 0.8;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.yt-focus-notification.show {
+    opacity: 1;
+    scale: 1;
+}
+
+.yt-focus-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    text-align: center;
+}
+
+.yt-focus-icon {
+    font-size: 48px;
+    animation: bounce 0.6s ease-in-out;
+}
+
+.yt-focus-message {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 0.5px;
+}
+
+/* Bounce animation for icon */
+@keyframes bounce {
+    0%, 20%, 53%, 80%, 100% {
+        transform: translate3d(0, 0, 0);
+    }
+    40%, 43% {
+        transform: translate3d(0, -20px, 0);
+    }
+    70% {
+        transform: translate3d(0, -10px, 0);
+    }
+    90% {
+        transform: translate3d(0, -4px, 0);
+    }
+}
+
+/* Hide elements when focus mode is active */
+.yt-focus-hidden {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Smooth transitions for better UX */
+#secondary,
+#comments,
+ytd-comments,
+ytd-watch-next-secondary-results-renderer {
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Dark mode support for notification */
+@media (prefers-color-scheme: dark) {
+    .yt-focus-notification {
+        background: rgba(30, 30, 30, 0.95);
+        color: #fff;
+    }
+    
+    .yt-focus-message {
+        color: #fff;
+    }
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .yt-focus-notification {
+        padding: 20px 30px;
+        margin: 0 20px;
+        width: calc(100vw - 40px);
+        max-width: 400px;
+    }
+    
+    .yt-focus-icon {
+        font-size: 36px;
+    }
+    
+    .yt-focus-message {
+        font-size: 16px;
+    }
+}
+
+/* Additional selectors for better YouTube coverage */
+ytd-comments-panel-renderer.yt-focus-hidden,
+ytd-video-secondary-info-renderer.yt-focus-hidden,
+[section-identifier="comment-item-section"].yt-focus-hidden {
+    display: none !important;
+}
+
+/* Sidebar elements */
+[id="secondary"][class*="ytd-watch-flexy"].yt-focus-hidden,
+ytd-reel-shelf-renderer.yt-focus-hidden {
+    display: none !important;
+}
+
+/* Ensure notification appears above YouTube's overlay elements */
+.yt-focus-notification {
+    z-index: 99999 !important;
+}
